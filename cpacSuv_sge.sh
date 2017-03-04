@@ -4,7 +4,7 @@
 ## cpacFAB is the jobname and can be changed
 #$ -N cpac_fab
 ## execute the job using the mpi_smp parallel enviroment and 8 cores per job
-## create an array of 1112 jobs
+## create an array of 48 jobs
 #$ -t 1-48
 #$ -V
 #$ -l mem_free=2G
@@ -23,11 +23,11 @@ sge_ndx=$(( SGE_TASK_ID - 1 ))
 # random sleep so that jobs dont start at _exactly_ the same time
 sleep $(( $SGE_TASK_ID % 10 ))
 
-singularity run -B /mnt:/mnt  \
+singularity run -B /mnt:/mnt  -B /mnt/MD1200A/fbarrios:/tmp \
   /mnt/MD1200A/fbarrios/fbarrios/singularity_images/cpac_v1.0.1a_13 \
   --n_cpus 8 --mem_gb 16 \
-  --pipeline_file /mnt/MD1200A/fbarrios/cpacBIDS/pipeline_config_BIDS_rsImg.yml \
-  --data_config_file /mnt/MD1200A/fbarrios/cpacBIDS/data_config_BIDS_list_Img.yaml \
-  /mnt/MD1200A/fbarrios/BIDS/BIDS_PsyRes/ \
-  /mnt/MD1200A/fbarrios/cpacBIDS/outputDir/ \
+  --pipeline_file /mnt/MD1200A/fbarrios/cpac_rsConRDC/pipeline_config_rsConRDC.yml \
+  --data_config_file /mnt/MD1200A/fbarrios/cpac_rsConRDC/data_config_rsConRDC.yml \
+  /mnt/MD1200A/fbarrios/rsConRDC/ \
+  /mnt/MD1200A/fbarrios/cpac_rsConRDC/outputs_FAB/ \
   participant --participant_ndx ${sge_ndx} 
