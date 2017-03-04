@@ -13,7 +13,7 @@ module add singularity/2.2
 ## working disk is: /mnt/MD1200A/fbarrios/BIDS
 ## look for data directories: BIDS_something
 ## CPAC container: /mnt/MD1200A/fbarrios/fbarrios/singularity_images/cpac_v1.0.0
-singularity shell --shell /bin/bash -B /mnt:/mnt /mnt/MD1200A/fbarrios/fbarrios/singularity_images/cpac_v1.0.0
+singularity shell --shell /bin/bash -B /mnt:/mnt /mnt/MD1200A/fbarrios/fbarrios/singularity_images/cpac_v1.0.1a_13
 
 ## To find the number of free slots and the memory free per slot
 qstat -F slots
