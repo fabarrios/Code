@@ -23,7 +23,7 @@ sge_ndx=$(( SGE_TASK_ID - 1 ))
 # random sleep so that jobs dont start at _exactly_ the same time
 sleep $(( $SGE_TASK_ID % 10 ))
 
-singularity run -B /mnt:/mnt  -B /mnt/MD1200A/fbarrios:/tmp \
+singularity run -B /mnt:/mnt  -B /mnt/MD1200A/fbarrios/tmp:/tmp \
   /mnt/MD1200A/fbarrios/fbarrios/singularity_images/cpac_v1.0.1a_13 \
   --n_cpus 8 --mem_gb 16 \
   --pipeline_file /mnt/MD1200A/fbarrios/cpac_rsConRDC/pipeline_config_rsConRDC.yml \
