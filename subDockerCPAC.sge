@@ -1,0 +1,9 @@
+## ## ## ##
+## Docker submition 
+
+docker run -i --rm \
+    -v /tmp:/tmp \
+    -v /Users/barrios/BIDS/rsConRDC:/bids_dataset \
+    -v /Users/barrios/outputs:/outputs \
+    bids/cpac \
+    /bids_dataset /outputs participant --participant_label 01
