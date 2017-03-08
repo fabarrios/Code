@@ -26,8 +26,8 @@ sleep $(( $SGE_TASK_ID % 10 ))
 singularity run -B /mnt:/mnt  -B /mnt/MD1200A/fbarrios/tmp:/scratch \
   /mnt/MD1200A/fbarrios/fbarrios/singularity_images/cpac_v1.0.1a_13 \
   --n_cpus 8 --mem_gb 16 \
-  --pipeline_file /mnt/MD1200A/fbarrios/cpac_BIDS_rdc/BIDS_rdc_pipeline_config.yml \
-  --data_config_file /mnt/MD1200A/fbarrios/cpac_BIDS_rdc/BIDS_rdc_data_config.yml \
+  --pipeline_file /mnt/MD1200A/fbarrios/cpac_rsConRDC/cpac_pipeline_config_20170308222644.yml \
+  --data_config_file /mnt/MD1200A/fbarrios/cpac_rsConRDC/cpac_data_config_20170308222644.yml \
   /mnt/MD1200A/fbarrios/BIDS_rdc/ \
   /mnt/MD1200A/fbarrios/cpac_BIDS_rdc/ \
   participant --participant_ndx ${sge_ndx} 
