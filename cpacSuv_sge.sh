@@ -4,8 +4,8 @@
 ## cpacFAB is the jobname and can be changed
 #$ -N cpac_fab
 ## execute the job using the mpi_smp parallel enviroment and 8 cores per job
-## create an array of 48 jobs
-#$ -t 1-48
+## create an array of 28 jobs the number of subjects
+#$ -t 1-27
 #$ -V
 #$ -l mem_free=2G
 ## ## ##  #$ -pe mpi_smp 8  we dont have mpi_smp running in our Ada sge.
