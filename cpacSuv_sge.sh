@@ -5,29 +5,31 @@
 #$ -N cpac_fab
 ## execute the job using the mpi_smp parallel enviroment and 8 cores per job
 ## create an array of 28 jobs the number of subjects
-#$ -t 1-27
+#$ -t 1-25
 #$ -V
 #$ -l mem_free=2G
-## ## ##  #$ -pe mpi_smp 8  we dont have mpi_smp running in our Ada sge.
+#$ -pe openmp 4
 ## change the following working directory to a persistent directory that is
 ## available on all nodes, this is were messages printed by the app (stdout
 ## and stderr) will be stored
-#$ -wd /mnt/MD1200A/fbarrios/cpac_cluster_files/
+#$ -wd /mnt/MD1200A/fbarrios/cpac_BIDS_rdc/cluster_files
 
 module add singularity/2.2
 ## sudo chmod 777 /mnt
-mkdir -p /mnt/MD1200A/fbarrios/cpac_cluster_files/log/reports
+mkdir -p /mnt/MD1200A/fbarrios/cpac_BIDS_rdc/cpac_cluster_files/log/reports
 
 sge_ndx=$(( SGE_TASK_ID - 1 ))
 
 # random sleep so that jobs dont start at _exactly_ the same time
 sleep $(( $SGE_TASK_ID % 10 ))
 
-singularity run -B /mnt:/mnt  -B /mnt/MD1200A/fbarrios/tmp:/tmp \
-  /mnt/MD1200A/fbarrios/fbarrios/singularity_images/cpac_v1.0.1a_13 \
-  --n_cpus 8 --mem_gb 16 \
-  --pipeline_file /mnt/MD1200A/fbarrios/cpac_rsConRDC/pipeline_config_rsConRDC.yml \
-  --data_config_file /mnt/MD1200A/fbarrios/cpac_rsConRDC/data_config_rsConRDC.yaml \
-  /mnt/MD1200A/fbarrios/rsConRDC/ \
-  /mnt/MD1200A/fbarrios/cpac_rsConRDC/outputs_FAB/ \
-  participant --participant_ndx ${sge_ndx} 
+singularity run -B /mnt:/mnt  -B /mnt/MD1200A/fbarrios/tmp:/scratch \
+  /mnt/MD1200A/fbarrios/fbarrios/singularity_images/cpac_v1.0.1a_16 \
+  --n_cpus 4 --mem_gb 8 \
+  --pipeline_file /mnt/MD1200A/fbarrios/cpac_BIDS_rdc/BIDS_rdc_pipeline_config.y
+ml \
+  --data_config_file /mnt/MD1200A/fbarrios/cpac_BIDS_rdc/BIDS_rdc_data_config.ym
+l \
+  /mnt/MD1200A/fbarrios/BIDS_rdc/ \
+  /mnt/MD1200A/fbarrios/cpac_BIDS_rdc/ \
+  participant --participant_ndx ${sge_ndx}
