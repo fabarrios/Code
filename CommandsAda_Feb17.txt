@@ -16,7 +16,7 @@ module add singularity/2.2
 singularity shell --shell /bin/bash -B /mnt:/mnt /mnt/MD1200A/fbarrios/fbarrios/singularity_images/cpac_v1.0.1a_16
 
 ## running as a test_config generates a subject list of a BIDS_dir
-singularity run -B /mnt:/mnt -B /mnt/MD1200A/fbarrios/tmp:/tmp /mnt/MD1200A/fbarrios/fbarrios/singularity_images/cpac_v1.0.1a_16 /mnt/MD1200A/fbarrios/BIDS_rdc/ /mnt/MD1200A/fbarrios/cpac_BIDS_rdc/ test_config
+singularity run -B /mnt:/mnt -B /mnt/MD1200A/fbarrios/scratch:/scratch /mnt/MD1200A/fbarrios/fbarrios/singularity_images/cpac_v1.0.1a_16 /mnt/MD1200A/fbarrios/BIDS_rdc/ /mnt/MD1200A/fbarrios/cpac_BIDS_rdc/ test_config
 
 
 ## To find the number of free slots and the memory free per slot
@@ -24,13 +24,13 @@ qstat -F slots
 qstat -F mem_free
 
 ## A script for submiting a singularity job needs to be edited
-run_cluster.sge
+cpacSub.sge
 
 ## For defining the data file and the pipefile
 ## Data file is passed to the container with the --data_config_file
 ## Pipeline file is passed to the container with the --pipeline_file
 ## For runnnig the container the script is submied to the sge
-qsub run_cluster.sge
+qsub cpacSub.sge
 qstat -f
 
 ## To see the usage at the slots, log into the node and run a top or htop
