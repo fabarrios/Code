@@ -1,0 +1,11 @@
+## ### ### ## ### ### ##
+# Commands for parallel
+# to print the dimensions of parameters in the header in a set of nii files
+ls */func/* | parallel fslhd {} | grep pixdim4
+ls */func/* | parallel fslhd {} | grep pixdim3
+ls */func/* | parallel fslhd {} | grep pixdim2
+ls */func/* | parallel fslhd {} | grep pixdim1
+
+# to set the dimension values in the header for a set of nii files like seting
+# the TR the last in the following (the pixdim4)
+ls */func/* | parallel fslchpixdim {} 4 4 4 2
