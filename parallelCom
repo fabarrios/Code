@@ -12,3 +12,8 @@ ls */func/* | parallel fslchpixdim {} 4 4 4 2
 
 #
 fslhd sub-20/func/sub-20_task-rest_ses-01_run-base_bold.nii.gz
+# # To reorient to the standart all the saggital structurals
+ls -d sub-* | parallel fslreorient2std {}/anat/*_T1w.nii.gz {}/anat/*_T1w.nii.gz
+#
+ls -d sub-* | parallel fslreorient2std {}/func/*_task-rest_bold.nii {}/func/*_task-rest_bold.nii
+ls -d sub-* | parallel fslreorient2std {}/func/*_task-hypno_bold.nii {}/func/*_task-hypno_bold.nii
