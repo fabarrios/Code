@@ -10,6 +10,10 @@ ls */func/* | parallel fslhd {} | grep pixdim1
 # the TR the last in the following (the pixdim4)
 ls */func/* | parallel fslchpixdim {} 4 4 4 2
 
+# 
+ls -d sub-* | parallel gzip {}/anat/*_T1w.nii
+ls -d sub-* | parallel gzip {}/func/*_bold.nii
+
 #
 fslhd sub-20/func/sub-20_task-rest_ses-01_run-base_bold.nii.gz
 # # To reorient to the standart all the saggital structurals
