@@ -14,8 +14,9 @@ ls */func/* | parallel fslchpixdim {} 4 4 4 2
 ls -d sub-* | parallel gzip {}/anat/*_T1w.nii
 ls -d sub-* | parallel gzip {}/func/*_bold.nii
 
-#
-fslhd sub-20/func/sub-20_task-rest_ses-01_run-base_bold.nii.gz
+# To reorient nii T1 3D files used with the sag acquisitions in our protocol
+# to work with CPAC
+# to reorient a subject example: fslhd sub-20/func/sub-20_task-rest_ses-01_run-base_bold.nii.gz
 # # To reorient to the standart all the saggital structurals
 ls -d sub-* | parallel fslreorient2std {}/anat/*_T1w.nii.gz {}/anat/*_T1w.nii.gz
 #
