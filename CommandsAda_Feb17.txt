@@ -16,7 +16,7 @@ module add singularity/2.2
 singularity shell --shell /bin/bash -B /mnt:/mnt /mnt/MD1200A/fbarrios/fbarrios/singularity_images/cpac_v1.0.1a_17
 
 ## running as a test_config generates a subject list of a BIDS_dir
-singularity run -B /mnt:/mnt -B /mnt/MD1200A/fbarrios/tmp:/scratch /mnt/MD1200A/fbarrios/fbarrios/singularity_images/cpac_v1.0.1a_17 /mnt/MD1200A/fbarrios/BIDS_Hypno/ /mnt/MD1200A/fbarrios/cpac_BIDS_Hypno/ test_config
+singularity run -B /mnt:/mnt -B /mnt/MD1200A/fbarrios/tmp:/scratch /mnt/MD1200A/fbarrios/fbarrios/singularity_images/cpac_v1.0.1a_17 /mnt/MD1200A/fbarrios/BIDS_MedRes/ /mnt/MD1200A/fbarrios/cpac_BIDS_MedRes/ test_config
 
 
 ## To find the number of free slots and the memory free per slot
