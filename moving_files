@@ -1,0 +1,16 @@
+# 
+# Some notes of codes to move some fiels in BIDS database
+# Nothing perect, but works
+#
+# first test:
+for i in $(ls sub-*/ses-*/func/*rest*) ; do a=$(echo $i|cut -d - -f 1-5); echo $i ${a}-rest_run-ba_bold.nii.gz; done
+ 
+ # and then the mv
+ for i in $(ls sub-*/ses-*/func/*rest*) ; do a=$(echo $i|cut -d - -f 1-5); mv $i ${a}-rest_run-ba_bold.nii.gz; done
+ 
+ # now fr the files that had the wrong name
+ for i in $(ls sub-*/ses-*/func/*auto*) ; do a=$(echo $i|cut -d - -f 1-5); echo $i ${a}-rest_run-au_bold.nii.gz; done
+ 
+ # and the move
+ for i in $(ls sub-*/ses-*/func/*auto*) ; do a=$(echo $i|cut -d - -f 1-5); mv $i ${a}-rest_run-au_bold.nii.gz; done
+ 
