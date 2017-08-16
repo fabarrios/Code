@@ -23,7 +23,7 @@ sge_ndx=$(( SGE_TASK_ID - 1 ))
 # random sleep so that jobs dont start at _exactly_ the same time
 sleep $(( $SGE_TASK_ID % 10 ))
 
-singularity run -B /mnt:/mnt -B /nmt/MD1200A/fbarrios/tmp:/scratch \
+singularity run -B /mnt:/mnt -B /nmt/MD1200A/fbarrios/scratch:/scratch \
   /mnt/MD1200A/fbarrios/fbarrios/singularity_images/cpac_v1.0.1a_17 \
   --n_cpus 8 --mem_gb 16 \
   --pipeline_file /mnt/MD1200A/fbarrios/cpac_BIDS_MedRes/BIDS_MedRes_pipeline_config.yml \
