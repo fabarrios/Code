@@ -1,0 +1,25 @@
+#
+#
+
+# Commands to run CPAC at Strange using Dokcer and BIDS apps
+#
+# This will generate a dataset and a pipeline testing the BIDS
+# database
+docker run -i --rm \
+    -v /tmp:/tmp \
+    -v /Volumes/HV100/BIDS_MemRes:/bids_dataset \
+    -v /Volumes/HV100/cpac_BIDS_MemRes/outputs:/outputs \
+    bids/cpac \
+    /bids_dataset /outputs test_config
+    
+    
+# Once there are tested dataset and a pipeline, we can run.
+docker run -i --rm \
+    -v /tmp:/tmp \
+    -v /Volumes/HV100/BIDS_MemRes:/bids_dataset \
+    -v /Volumes/HV100/cpac_BIDS_MemRes/outputs:/outputs \
+    --n_cpus 8 --mem_gb 16 \
+    --pipeline_file /Volumes/HV100/cpac_BIDS_MedRes/BIDS_MedRes_pipeline_config.yml \
+    --data_config_file /Volumes/HV100/cpac_BIDS_MedRes/BIDS_MedRes_data_config.yml \
+    bids/cpac \
+    /bids_dataset /outputs participant --participant_label 01
