@@ -6,19 +6,19 @@
 #$ -N cpac_fab
 
 ## execute the job using the mpi_smp parallel enviroment and 8 cores per job
-## create an array of 28 jobs the number of subjects
-#$ -t 1-27
+## create an array of 6 jobs the number (six of the runs of the subjects)
+#$ -t 1-6
 #$ -V
 #$ -l mem_free=2G
 ## ## ##  #$ -pe mpi_smp 8  we dont have mpi_smp running in our Ada sge.
 ## change the following working directory to a persistent directory that is
 ## available on all nodes, this is were messages printed by the app (stdout
 ## and stderr) will be stored
-#$ -wd /Users/barrios/cpac_cluster_files/
+#$ -wd /Volumes/HV100/cpac_BIDS_MemRes/cpac_cluster_files/
 
 docker run -i --rm \
     -v /tmp:/tmp \
-    -v /Users/barrios/BIDS/rsConRDC:/bids_dataset \
-    -v /Users/barrios/outputs:/outputs \
+    -v /Volumes/HV100/BIDS_MemRes:/bids_dataset \
+    -v /Volumes/HV100/cpac_BIDS_MemRes/outputs:/outputs \
     bids/cpac \
     /bids_dataset /outputs participant --participant_label 01
