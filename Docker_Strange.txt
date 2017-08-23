@@ -26,6 +26,13 @@ docker run -i --rm \
     bids/cpac \
     /bids_dataset /outputs participant --participant_label 01
 
+# To run a test
+docker run -i --rm  \
+-v /tmp:/tmp  -v /Volumes/HV100/BIDS_MemRes:/Volumes/HV100/BIDS_MemRes  \
+-v /Volumes/HV100/cpac_BIDS_MemRes/:/Volumes/HV100/cpac_BIDS_MemRes/ \
+bids/cpac --pipeline_file /Volumes/HV100/cpac_BIDS_MedRes/BIDS_MedRes_pipeline_config.yml \
+--data_config_file /Volumes/HV100/cpac_BIDS_MedRes/BIDS_MedRes_data_config.yml  /Volumes/HV100/BIDS_MemRes  /Volumes/HV100/cpac_BIDS_MemRes/ participant --participant_label 01
+
 # Then to run all the participants
 docker run -i --rm \
     -v /tmp:/tmp \
