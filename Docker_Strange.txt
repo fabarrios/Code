@@ -13,9 +13,9 @@ docker run -i --rm \
     /bids_dataset /outputs test_config
 # Looks that it is not running
 #
-docker run -i --rm \
---privileged -e DISPLAY=172.24.80.78:0 \
--v /tmp:/tmp \
+docker run -i --rm --privileged \
+-e DISPLAY=172.24.80.78:0 \
+-v /tmp:/scratch \
 -v /tmp/.X11-unix:/tmp/.X11-unix \
 -v /Volumes/HV100/BIDS_MemRes:/bids_dataset \
 -v /Volumes/HV100/cpac_BIDS_MemRes/outputs:/outputs \
@@ -23,33 +23,24 @@ bids/cpac /bids_dataset /outputs GUI
 
 # Test
 # Once there are generated a dataset file and a pipeline, we can run ONLY ONE participant.
+# This now is not running
+#
 docker run -i --rm -v /tmp:/tmp \
-    -v /Volumes/HV100/BIDS_MemRes:/bids_dataset \
-    -v /Volumes/HV100/cpac_BIDS_MemRes:/outputs \
-    bids/cpac --n_cpus 8 --mem_gb 16 \
-    --pipeline_file /outputs/BIDS_MedRes_pipeline_config.yml \
-    --data_config_file /outputs/BIDS_MedRes_data_config.yml \
-    /bids_dataset /outputs participant --participant_label 01
+ -v /Volumes/HV100/BIDS_MemRes:/bids_dataset \
+ -v /Volumes/HV100/cpac_BIDS_MemRes:/outputs \
+ bids/cpac --n_cpus 8 --mem_gb 16 \
+ --pipeline_file /outputs/BIDS_MemRes_pipeline_config.yml \
+ --data_config_file /outputs/BIDS_MemRes_data_config.yml \
+ /bids_dataset /outputs participant --participant_label 01
 
-# To run a test
-docker run -i --rm  \
--v /Volumes:/Volumes \
--v /Volumes/HV100/scratch:/scratch \
--v /Volumes/HV100/BIDS_MemRes:/Volumes/HV100/BIDS_MemRes  \
--v /Volumes/HV100/cpac_BIDS_MemRes/:/Volumes/HV100/cpac_BIDS_MemRes/ \
-bids/cpac \
---n_cpus 8 --mem_gb 16 \
---pipeline_file /Volumes/HV100/cpac_BIDS_MedRes/BIDS_MedRes_pipeline_config.yml \
---data_config_file /Volumes/HV100/cpac_BIDS_MedRes/BIDS_MedRes_data_config.yml \
-/Volumes/HV100/BIDS_MemRes  /Volumes/HV100/cpac_BIDS_MemRes/ participant --participant_label 01
-
-# Then to run all the participants
-docker run -i --rm \
-    -v /tmp:/tmp \
-    -v /Volumes/HV100/BIDS_MemRes:/bids_dataset \
-    -v /Volumes/HV100/cpac_BIDS_MemRes/outputs:/outputs \
-    --n_cpus 8 --mem_gb 16 \
-    --pipeline_file /Volumes/HV100/cpac_BIDS_MedRes/BIDS_MedRes_pipeline_config.yml \
-    --data_config_file /Volumes/HV100/cpac_BIDS_MedRes/BIDS_MedRes_data_config.yml \
-    bids/cpac \
-    /bids_dataset /outputs participant
+# To run all the participants
+# I have the Docker config with 8 cpu's and 2 GB 
+#
+docker run -i --rm -v /tmp:/tmp \
+ -v /Volumes/HV100/BIDS_MemRes:/bids_dataset \
+ -v /Volumes/HV100/cpac_BIDS_MemRes:/outputs \
+ bids/cpac --n_cpus 8 --mem_gb 16 \
+ --pipeline_file /outputs/BIDS_MemRes_pipeline_config.yml \
+ --data_config_file /outputs/BIDS_MemRes_data_config.yml \
+ /bids_dataset /outputs participant
+ 
