@@ -8,11 +8,18 @@
 docker run -i --rm \
     -v /tmp:/tmp \
     -v /Volumes/HV100/BIDS_MemRes:/bids_dataset \
-    -v /Volumes/HV100/cpac_BIDS_MemRes/outputs:/outputs \
+    -v /Volumes/HV100/cpac_BIDS_MemRes/:/outputs \
     bids/cpac \
     /bids_dataset /outputs test_config
-
-docker run -i --rm --privileged -e DISPLAY=172.24.80.78:0 -v /tmp/.X11-unix:/tmp/.X11-unix -v /tmp:/tmp -v /Volumes/HV100/BIDS_MemRes:/bids_dataset -v /Volumes/HV100/cpac_BIDS_MemRes/outputs:/outputs bids/cpac /bids_dataset /outputs GUI    
+# Looks that it is not running
+#
+docker run -i --rm \
+--privileged -e DISPLAY=172.24.80.78:0 \
+-v /tmp:/tmp \
+-v /tmp/.X11-unix:/tmp/.X11-unix \
+-v /Volumes/HV100/BIDS_MemRes:/bids_dataset \
+-v /Volumes/HV100/cpac_BIDS_MemRes/outputs:/outputs \
+bids/cpac /bids_dataset /outputs GUI    
 
 # Test
 # Once there are generated a dataset file and a pipeline, we can run ONLY ONE participant.
@@ -20,10 +27,10 @@ docker run -i --rm \
     -v /tmp:/tmp \
     -v /Volumes/HV100/BIDS_MemRes:/bids_dataset \
     -v /Volumes/HV100/cpac_BIDS_MemRes/outputs:/outputs \
-    --n_cpus 8 --mem_gb 16 \
-    --pipeline_file /Volumes/HV100/cpac_BIDS_MedRes/BIDS_MedRes_pipeline_config.yml \
-    --data_config_file /Volumes/HV100/cpac_BIDS_MedRes/BIDS_MedRes_data_config.yml \
     bids/cpac \
+    --n_cpus 8 --mem_gb 16 \
+    --pipeline_file /outputs/BIDS_MedRes_pipeline_config.yml \
+    --data_config_file /outputs/BIDS_MedRes_data_config.yml \    
     /bids_dataset /outputs participant --participant_label 01
 
 # To run a test
