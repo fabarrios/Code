@@ -11,3 +11,9 @@ PROJ_D = pwd
 # if we have parallel working
 cat filelist | parallel pydeface {}
 cat filelist | parallel rm {}
+# in a BIDS subdirectory structure, to reorient with fslreorient
+# all the set of anat images
+ls */anat/*.nii.gz | cut -d . -f1 | parallel fslreorient2std {}.nii.gz {}_r2s.nii.gz
+ls */anat/*_r2s.nii.gz | cut -d . -f1 | parallel bet {} {}_bet.nii.gz
+# for the functional is good to do a reorientation too
+ls */func/*.nii.gz | cut -d . -f1 | parallel fslreorient2std {}.nii.gz {}_r2s.nii.gz
