@@ -1,1 +1,3 @@
-FirstLevelAnalysis sub-control02/func/sub-control02_task-humpri_bold_r2s.nii sub-control02/anat/sub-control02_t1w_r2s_bet.nii MNI152_T1_2mm_brain.nii regressors.txt contrasts.txt -device 1 -slicepattern 0 -bayesian
+FirstLevelAnalysis sub-control02/func/sub-control02_task-humpri_bold_r2s.nii \
+  sub-control02/anat/sub-control02_t1w_r2s_bet.nii MNI152_T1_2mm_brain.nii \
+  regressors.txt contrasts.txt -device 1 -slicepattern 0 -bayesian
