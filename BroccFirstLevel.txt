@@ -1,6 +1,6 @@
 #
 #
-FirstLevelAnalysis sub-control02/func/sub-control02_task-humpri_bold_r2s.nii sub-control02/anat/sub-control02_t1w_r2s_bet.nii /usr/local/fsl/data/standard/MNI152_T1_2mm_brain.nii regressors.txt contrasts.txt -device 0 -slicepattern 0 -savedesignmatrix -bayesian
+FirstLevelAnalysis sub-control02/func/sub-control02_task-humpri_bold_r2s.nii sub-control02/anat/sub-control02_t1w_r2s_bet.nii /usr/local/fsl/data/standard/MNI152_T1_2mm_brain.nii regressors.txt contrasts.txt -device 0 -slicepattern 0 -regressmotion -savedesignmatrix -savet1interpolated -saveepialignedmni -savemnimask -savemotionparameters 
 #
 #
 RegisterTwoVolumes sub-control02/anat/sub-control02_t1w_r2s_bet.nii /usr/local/fsl/data/standard/MNI152_T1_2mm_brain.nii \
