@@ -1,0 +1,9 @@
+# Running BROCCOLI at the MacPro
+# To run a first level with BROCCOLI, of the primatologists data in BIDS structure
+# the for loop runs three different fuctional files and call the same anatomical file three
+# times.
+#
+for i in $(ls sub-*/func/*_r2s.nii) ; do a=$(echo $i |cut -d / -f1); \
+FirstLevelAnalysis $i $a/anat/$a'_t1w_r2s_bet.nii' /usr/local/fsl/data/standard/MNI152_T1_2mm_brain.nii \
+regressors.txt contrasts.txt -device 0 -slicepattern 1 -regressmotion -savedesignmatrix \
+-savet1interpolated -savet1alignedlinear -saveepialignedmni ; done
