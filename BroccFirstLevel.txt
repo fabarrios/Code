@@ -1,11 +1,19 @@
-#
+# Running BROCCOLI at the MacPro
+# To run a first level with BROCCOLI, this is the specific files for test:
 #
 FirstLevelAnalysis sub-control02/func/sub-control02_task-humpri_bold_r2s.nii \
 sub-control02/anat/sub-control02_t1w_r2s_bet.nii /usr/local/fsl/data/standard/MNI152_T1_2mm_brain.nii \
 regressors.txt contrasts.txt -device 0 -slicepattern 1 -regressmotion -savedesignmatrix \
--savet1interpolated -saveepialignedmni -savemnimask -savemotionparameters 
+-savet1interpolated -savet1alignedlinear -saveepialignedmni
+
+# For our three tasks files in BIDS format
 #
+FirstLevelAnalysis sub-cont##/func/sub-cont##_task-humpri_bold_r2s.nii \
+sub-cont##/anat/sub-cont##_t1w_r2s_bet.nii /usr/local/fsl/data/standard/MNI152_T1_2mm_brain.nii \
+regressors.txt contrasts.txt -device 0 -slicepattern 1 -regressmotion -savedesignmatrix \
+-savet1interpolated -savet1alignedlinear -saveepialignedmni
+
 #
+# Volume registration with BROCCOLI
 RegisterTwoVolumes sub-control02/anat/sub-control02_t1w_r2s_bet.nii /usr/local/fsl/data/standard/MNI152_T1_2mm_brain.nii \
 -device 0 -iterationslinear 10 -iterationsnonlinear 10 -savematrix
-#
