@@ -7,3 +7,20 @@ for i in $(ls sub-*/func/*_r2s.nii) ; do a=$(echo $i |cut -d / -f1); \
 FirstLevelAnalysis $i $a/anat/$a'_t1w_r2s_bet.nii' /usr/local/fsl/data/standard/MNI152_T1_2mm_brain.nii \
 regressors.txt contrasts.txt -device 0 -slicepattern 1 -regressmotion -savedesignmatrix \
 -savet1interpolated -savet1alignedlinear -saveepialignedmni ; done
+#
+#
+#fslmerge the files to construct the 4D of the beta files from the first run
+for i in $(ls sub-*/func/*control*humpri*beta_regressor0001_MNI.nii); do a=$(echo $i); \
+fslmerge -a cont_task-humpri_regressor0001_MNI $a; done
+#
+for i in $(ls sub-*/func/*control*anihum*beta_regressor0002_MNI.nii); do a=$(echo $i); \
+fslmerge -a cont_task-anihum_regressor02_MNI $a; done
+#
+for i in $(ls sub-*/func/*control*anihum*beta_regressor0001_MNI.nii); do a=$(echo $i); \
+fslmerge -a cont_task-anihum_regressor01_MNI $a; done
+#
+fslmerge -a cont_task-human_MNI cont_task-anihum_regressor02_MNI.nii.gz cont_task-humpri_regressor01_MNI.nii.gz
+#
+#
+GLM task-anihum_regressor0001_MNI_concat.nii -design design.txt -contrasts contrasts.txt \
+-teststatistics 0 -device 0 -savedesignmatrix -secondlevel
