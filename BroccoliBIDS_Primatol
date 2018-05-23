@@ -19,8 +19,19 @@ fslmerge -a cont_task-anihum_regressor02_MNI $a; done
 for i in $(ls sub-*/func/*control*anihum*beta_regressor0001_MNI.nii); do a=$(echo $i); \
 fslmerge -a cont_task-anihum_regressor01_MNI $a; done
 #
-fslmerge -a cont_task-human_MNI cont_task-anihum_regressor02_MNI.nii.gz cont_task-humpri_regressor01_MNI.nii.gz
+for i in $(ls sub-*/func/*primatol*priani*beta_regressor0002_MNI.nii); do a=$(echo $i); \
+fslmerge -a prim_task-priani_regressor02_MNI $a; done
 #
+for i in $(ls sub-*/func/*primatol*priani*beta_regressor0002_MNI.nii); do a=$(echo $i); \
+fslmerge -a prim_task-priani_regressor02_MNI $a; done
+#
+fslmerge -a cont_task-human_MNI cont_task-anihum_regressor02_MNI.nii.gz cont_task-humpri_regressor01_MNI.nii.gz
+fslmerge -a cont_task-primate_MNI cont_task-humpri_regressor02_MNI.nii.gz cont_task-priani_regressor01_MNI.nii.gz
+fslmerge -a cont_task-animal_MNI cont_task-priani_regressor02_MNI.nii.gz cont_task-anihum_regressor01_MNI.nii.gz
+#
+fslmerge -a prim_task-human_MNI prim_task-anihum_regressor02_MNI.nii.gz prim_task-humpri_regressor01_MNI.nii.gz
+fslmerge -a prim_task-primate_MNI prim_task-humpri_regressor02_MNI.nii.gz prim_task-priani_regressor01_MNI.nii.gz
+fslmerge -a prim_task-animal_MNI prim_task-priani_regressor02_MNI.nii.gz prim_task-anihum_regressor01_MNI.nii.gz
 #
 GLM task-anihum_regressor0001_MNI_concat.nii -design design.txt -contrasts contrasts.txt \
 -teststatistics 0 -device 0 -savedesignmatrix -secondlevel
