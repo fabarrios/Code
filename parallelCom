@@ -24,6 +24,6 @@ ls -d sub-* | parallel fslreorient2std {}/func/*_task-rest_bold.nii.gz {}/func/*
 ls -d sub-* | parallel fslreorient2std {}/func/*_task-hypno_bold.nii.gz {}/func/*_task-hypno_bold.nii.gz
 #
 #
-# for changing the names in some fild
+# for changing the names in some BIDS field
 for i in $(ls BIDS_HypHigh/sub-*/func/*_task-hypno*.nii.gz) ; \
 do a=$(echo $i | cut -d / -f2) ; echo $i BIDS_HypHigh/$a/func/$a'_task-rest_run-hyp_bold.nii.gz' ; done
