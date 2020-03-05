@@ -44,13 +44,13 @@ topdir=$(pwd)
 echo "[INFO] top dir is $topdir" 
 ## create required dirs
 mkdir ${topdir}/final
-mkdir ${topdir}/process ${topdir}/process/mnc ${topdir}/process/n4
+mkdir ${topdir}/process 
+mkdir ${topdir}/process/mnc ${topdir}/process/n4 ${topdir}/process/nlm ${topdir}/process/niis
 
 step_mnc=${topdir}/process/mnc
 step_nlm=${topdir}/process/nlm 
 step_niis=${topdir}/process/niis
 step_n4=${topdir}/process/n4
-
 
 ## define file names
 cd $topdir
