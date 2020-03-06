@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# This lines call the CIVET pipeline in the VM with all the files at the
+# /vagrant common directory
+
+topdir=/vagrant/Hypno/Hyp_civet
+source /home/vagrant/civet-2.1.1-binaries-ubuntu-18/Linux-x86_64/init.sh
+
+ls *n4.mnc | cut -d "_" -f 2 | cut -d "_" -f 1 | parallel \
+/home/vagrant/civet-2.1.1-binaries-ubuntu-18/Linux-x86_64/CIVET-2.1.1/CIVET_Processing_Pipeline  \
+-sourcedir $topdir/final -targetdir $topdir/result -prefix TA -N3-distance 0 -lsq12 -mean-curvature \
+-mask-hippocampus -resample-surfaces -correct-pve -interp sinc -template 0.50 -thickness tlink 10:30 \
+-area-fwhm 0:40 -volume-fwhm 0:40 -VBM -surface-atlas AAL -granular -run {}
