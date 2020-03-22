@@ -19,6 +19,7 @@ Examples:
 # -----------------------------------------------------------------------------------------------#
 
 ## checking if the input is valid
+# $1 is the directory with the original nii
 prefix=$2
 
 if [[ -d $1 ]]; then
@@ -40,23 +41,24 @@ fi
 
 # # # # # # # # # # Changing working directory & defining topdir # # # # # # # # # # # # # # # # # 
 cd $1
+cd ../
 topdir=$(pwd)
 echo "[INFO] top dir is $topdir" 
 ## create required dirs
 mkdir ${topdir}/final
 mkdir ${topdir}/process 
-mkdir ${topdir}/process/mnc ${topdir}/process/n4 
-# mkdir ${topdir}/process/nlm ${topdir}/process/niis
+mkdir ${topdir}/process/n4
+mkdir ${topdir}/process/niis
+mkdir ${topdir}/process/nlm 
 
-step_mnc=${topdir}/process/mnc
-# step_nlm=${topdir}/process/nlm 
-# step_niis=${topdir}/process/niis
+# step_mnc=${topdir}/process/mnc
 step_n4=${topdir}/process/n4
+step_niis=${topdir}/process/niis
+step_nlm=${topdir}/process/nlm 
 
 ## define file names
 cd $topdir
-for nii in *.nii*; do
-
+for nii in $(ls input/*.nii.*); do
 	if [ -z "$3" ]; then
 	id=`echo $nii | cut -d "_" -f 2 | cut -d "_" -f 1`
 
@@ -69,8 +71,8 @@ echo "[INFO] ID $id WAS CREATED AND ADDED TO PRE-PROCESSING"
 N4_file=$step_n4/${id}_n4.nii.gz
 minc_file=$step_mnc/$2_${id}_t1.mnc
 # nlm_file=$step_nlm/${id}_nlm.mnc
-# nii_file=$step_niis/${id}_n2.nii.gz
-# mnc_file=${topdir}/mncfiles/$3_${id}_t1.mnc
+nii_file=$step_niis/${id}_n2.nii.gz
+mnc_file=${topdir}/mncfiles/$3_${id}_t1.mnc
 
 ## process
 echo "[INFO]... N4 bias field correction en $step_n4: $N4_file" >> log_n4.txt
@@ -89,3 +91,5 @@ ConvertImage 3 $N4_file $minc_file
 # nii2mnc $N4_file $topdir/final/$2_${id}_t1.mnc
 
 done
+
+
