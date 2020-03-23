@@ -15,7 +15,6 @@ Examples:
 -Eliseo
 "
 }
-
 # -----------------------------------------------------------------------------------------------#
 
 ## checking if the input is valid
@@ -69,26 +68,29 @@ for nii in $(ls input/*.nii.*); do
 echo "[INFO] ID $id WAS CREATED AND ADDED TO PRE-PROCESSING"
 # input_file=$nii
 N4_file=$step_n4/${id}_n4.nii.gz
-minc_file=$step_mnc/$2_${id}_t1.mnc
-# nlm_file=$step_nlm/${id}_nlm.mnc
-nii_file=$step_niis/${id}_n2.nii.gz
-mnc_file=${topdir}/mncfiles/$3_${id}_t1.mnc
+# minc_file=$step_mnc/$2_${id}_t1.mnc
+nlm_file=$step_nlm/${id}_nlm.mnc
+nii_file=$step_niis/${id}_std_t1.nii.gz
+# mnc_file=${topdir}/mncfiles/$3_${id}_t1.mnc
 
 ## process
+echo"[INFO]... reorient to standard en $step_niis: $niifile" >> log_n4.txt
+fslreorient2std $nii $nii_file
+
 echo "[INFO]... N4 bias field correction en $step_n4: $N4_file" >> log_n4.txt
 N4BiasFieldCorrection -d 3 -i $nii -o $N4_file
 
-echo "[INFO]... Creando un archivo minc en $step_mnc: $minc_file" >> log_n4.txt
-ConvertImage 3 $N4_file $minc_file
+# echo "[INFO]... Creando un archivo minc en $step_mnc: $minc_file" >> log_n4.txt
+# ConvertImage 3 $N4_file $minc_file
 
 # echo "[INFO]... Aplicando la limpieza de ruido con non-local means en $step_nlm: $nlm_file" >> log_n4.txt
-# mincnlm $minc_file $nlm_file
+mincnlm $minc_file $nlm_file
 
 # echo "[FINAL INFO]... Corrigiendo archivo MINC en $topdir/final: $2_${id}_t1.mnc" >> log_n4.txt
 
 # ConvertImage 3 $nlm_file $nii_file
 # ConvertImage 3 $N4_file $minc_file
-# nii2mnc $N4_file $topdir/final/$2_${id}_t1.mnc
+nii2mnc $N4_file $topdir/final/$stdN4_${id}_t1.mnc
 
 done
 
