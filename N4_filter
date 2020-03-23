@@ -9,8 +9,8 @@ echo "
 	4th argument = Sebjects' ID second delimiter (optional)
 The 3rd and 4th argument must be included only if the ID delimiters are other than _ . For example, if the file names are something like: \"sub_01_bob.nii.gz\" , these arguments need not be included. If the file names go something like: \"sub-01.bob.nii.gz\" , the third argument should be: \"-\" and the fourth: \".\"
 Examples:
-> ./N4_script.sh /misc/path/to/niftidirectory MR
-> ./N4_script.sh /misc/path/to/niftidirectory MR - .
+> ./N4_filter /misc/path/to/original_niftidir MR
+> ./N4_filter /misc/path/to/original_niftidir MR - .
  
 -Eliseo
 "
@@ -36,7 +36,6 @@ else
     prefix=$2	
     echo "[INFO] STUDY PREFIX IS: $prefix"  
 fi
-
 
 # # # # # # # # # # Changing working directory & defining topdir # # # # # # # # # # # # # # # # # 
 cd $1
@@ -93,5 +92,3 @@ mincnlm $minc_file $nlm_file
 nii2mnc $N4_file $topdir/final/$stdN4_${id}_t1.mnc
 
 done
-
-
