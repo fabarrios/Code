@@ -1,0 +1,88 @@
+#!/bin/bash
+source /opt/minc/1.9.17/minc-toolkit-config.sh
+#---------------- HELP ----------------#
+help() {
+echo "
+	1st argument = folder whith NIfTIs
+	2nd argument = study prefix (optional)
+	3rd argument = Sub ID first delimiter (optional)
+	4th argument = Sub ID second delimiter (optional)
+The 3rd and 4th argument must be included only if the ID delimiters are other than _
+For example, if the file names are something like: \"sub_01_bob.nii.gz\" , these 
+arguments need not be included. If the file names go something like: \"sub-01.bob.nii.gz\" , 
+the third argument should be: \"-\" and the fourth: \".\"
+Example:
+> ./N4_filt /path/to/niftis name
+This pipeline is to run in the MacOS with ANTS and minc intalled in /opt
+"
+}
+
+# -----------------------------------------------------------------------------------------------#
+## checking the input $1(NIfTI_folder) $2(prefix default MR) $3(sub -d 1) $4(sub -d2)
+prefix=$2
+
+if [[ -d $1 ]]; then
+    echo "[INFO] $1 is a directory"
+else
+    echo "[INFO] $1 is not valid"
+    help
+    exit 1
+fi
+
+if [ -z "$2" ]; then
+    prefix=MR
+    echo "[INFO] STANDARD STUDY PREFIX ASSIGNED: $prefix"
+else
+    prefix=$2	
+    echo "[INFO] STUDY PREFIX IS: $prefix"  
+fi
+
+# # # # # Changing working directory & defining topdir # # # # # # # # # # # # 
+cd $1
+cd ../
+topdir=$(pwd)
+echo "[INFO] top dir is $topdir"
+
+## create required dirs
+mkdir ${topdir}/final
+mkdir ${topdir}/orig
+mkdir ${topdir}/process
+mkdir ${topdir}/process/r2s 
+mkdir ${topdir}/process/n4
+
+step_niis=${topdir}/orig
+step_r2s=${topdir}/process/r2s
+step_n4=${topdir}/process/n4
+step_mnc=${topdir}/final
+
+## define file names
+cd $1
+for nii in *.nii*; do
+	if [ -z "$3" ]; then
+	id=`echo $nii | cut -d "_" -f 2 | cut -d "_" -f 1`
+
+	else
+	id=`echo $nii | cut -d "$3" -f 2 | cut -d "$4" -f 1`
+	fi
+
+echo "[INFO] ID $id WAS CREATED AND ADDED TO PRE-PROCESSING"
+## input_file=$nii
+nii_file=$step_niis/${id}_T1w.nii.gz
+N4_file=$step_n4/${id}_n4_T1w.nii.gz
+r2s_file=$step_r2s/${id}_r2s_T1w.nii.gz
+minc_file=$step_mnc/${id}_t1.mnc
+
+## process
+echo "[INFO]... saving the original NIfTI file" >> log_n4.txt
+cp $nii $nii_file
+
+echo "[INFO]... reorient to standard the NIfTI" >> log_n4.txt
+reorient2std $nii $r2s_file
+
+echo "[INFO]... N4 bias field correction en $step_n4: $N4_file" >> log_n4.txt
+N4BiasFieldCorrection -d 3 -i $r2s_file -o $N4_file
+
+echo "[FINAL INFO]... Corrigiendo archivo MINC en $topdir/final: $2_${id}_t1.mnc" >> log_n4.txt
+nii2mnc $N4_file $minc_file
+
+done
