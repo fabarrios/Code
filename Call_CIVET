@@ -6,7 +6,7 @@
 topdir=/vagrant/CIVET_Hypno
 source /usr/local/civet-2.1.1-binaries-ubuntu-18/Linux-x86_64/init.sh
 
-ls *t1.mnc | cut -d "_" -f 2 | cut -d "_" -f 1 | parallel \
+ls *t1.mnc | parallel \
 /usr/local/civet-2.1.1-binaries-ubuntu-18/Linux-x86_64/CIVET-2.1.1/CIVET_Processing_Pipeline  \
 -sourcedir $topdir/final -targetdir $topdir/result -prefix Hyp -N3-distance 0 -lsq12 -mean-curvature \
 -mask-hippocampus -resample-surfaces -correct-pve -interp sinc -template 0.50 -thickness tlink 10:30 \
