@@ -1,0 +1,60 @@
+#!/bin/bash
+source /opt/minc/1.9.17/minc-toolkit-config.sh
+
+#---------------- HELP ----------------#
+help() {
+echo "
+	1st argument = folder whith NIfTIs
+	2nd argument = study prefix (optional)
+	
+We assume the file names are in BIDS structure something like: \"sub_01_bob.nii.gz\"
+Example:
+> ./N4_filt /path/to/niftis name
+This pipeline is to run in the MacOS with ANTS and minc intalled in /opt
+"
+}
+
+# -----------------------------------------------------------------------------------------------#
+## checking the input $1(NIfTI_folder) $2(prefix default MR) $3(sub -d 1) $4(sub -d2)
+prefix=$2
+
+if [[ -d $1 ]]; then
+    echo "[INFO] $1 is a directory"
+else
+    echo "[INFO] $1 is not valid"
+    help
+    exit 1
+fi
+
+if [ -z "$2" ]; then
+    prefix=MR
+    echo "[INFO] STANDARD STUDY PREFIX ASSIGNED: $prefix"
+else
+    prefix=$2	
+    echo "[INFO] STUDY PREFIX IS: $prefix"  
+fi
+
+# # # # # Changing working directory & defining topdir # # # # # # # # # # # # 
+cd $1
+cd ../
+topdir=$(pwd)
+echo "[INFO] top dir is $topdir"
+
+## create required dirs
+mkdir ${topdir}/final
+mkdir ${topdir}/orig
+mkdir ${topdir}/process
+mkdir ${topdir}/process/r2s 
+mkdir ${topdir}/process/n4
+
+step_niis=${topdir}/orig
+step_r2s=${topdir}/process/r2s
+step_n4=${topdir}/process/n4
+step_mnc=${topdir}/final
+
+echo "[INFO] ID $id WAS CREATED AND ADDED TO PRE-PROCESSING"
+## input_file=$nii
+nii_file=$step_niis/${id}_T1w.nii.gz
+N4_file=$step_n4/${id}_n4_T1w.nii.gz
+r2s_file=$step_r2s/${id}_r2s_T1w.nii.gz
+minc_file=$step_mnc/${id}_t1.mnc
